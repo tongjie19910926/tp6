@@ -1,0 +1,66 @@
+[28-Nov-2020 12:53:07 Asia/Shanghai] PHP Fatal error:  Uncaught Error: Class 'Config' not found in E:\phpstudy_pro\WWW\tp6\config\view.php:30
+Stack trace:
+#0 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(92): include()
+#1 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(73): think\Config->parse('E:\\phpstudy_pro...', 'view')
+#2 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(511): think\Config->load('E:\\phpstudy_pro...', 'view')
+#3 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(420): think\App->load()
+#4 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(186): think\App->initialize()
+#5 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(163): think\Http->initialize()
+#6 E:\phpstudy_pro\WWW\tp6\public\index.php(26): think\Http->run()
+#7 {main}
+  thrown in E:\phpstudy_pro\WWW\tp6\config\view.php on line 30
+[28-Nov-2020 12:53:08 Asia/Shanghai] PHP Fatal error:  Uncaught Error: Class 'Config' not found in E:\phpstudy_pro\WWW\tp6\config\view.php:30
+Stack trace:
+#0 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(92): include()
+#1 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(73): think\Config->parse('E:\\phpstudy_pro...', 'view')
+#2 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(511): think\Config->load('E:\\phpstudy_pro...', 'view')
+#3 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(420): think\App->load()
+#4 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(186): think\App->initialize()
+#5 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(163): think\Http->initialize()
+#6 E:\phpstudy_pro\WWW\tp6\public\index.php(26): think\Http->run()
+#7 {main}
+  thrown in E:\phpstudy_pro\WWW\tp6\config\view.php on line 30
+[28-Nov-2020 12:53:08 Asia/Shanghai] PHP Fatal error:  Uncaught Error: Class 'Config' not found in E:\phpstudy_pro\WWW\tp6\config\view.php:30
+Stack trace:
+#0 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(92): include()
+#1 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(73): think\Config->parse('E:\\phpstudy_pro...', 'view')
+#2 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(511): think\Config->load('E:\\phpstudy_pro...', 'view')
+#3 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(420): think\App->load()
+#4 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(186): think\App->initialize()
+#5 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(163): think\Http->initialize()
+#6 E:\phpstudy_pro\WWW\tp6\public\index.php(26): think\Http->run()
+#7 {main}
+  thrown in E:\phpstudy_pro\WWW\tp6\config\view.php on line 30
+[28-Nov-2020 12:53:08 Asia/Shanghai] PHP Fatal error:  Uncaught Error: Class 'Config' not found in E:\phpstudy_pro\WWW\tp6\config\view.php:30
+Stack trace:
+#0 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(92): include()
+#1 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(73): think\Config->parse('E:\\phpstudy_pro...', 'view')
+#2 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(511): think\Config->load('E:\\phpstudy_pro...', 'view')
+#3 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(420): think\App->load()
+#4 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(186): think\App->initialize()
+#5 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(163): think\Http->initialize()
+#6 E:\phpstudy_pro\WWW\tp6\public\index.php(26): think\Http->run()
+#7 {main}
+  thrown in E:\phpstudy_pro\WWW\tp6\config\view.php on line 30
+[28-Nov-2020 12:53:08 Asia/Shanghai] PHP Fatal error:  Uncaught Error: Class 'Config' not found in E:\phpstudy_pro\WWW\tp6\config\view.php:30
+Stack trace:
+#0 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(92): include()
+#1 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(73): think\Config->parse('E:\\phpstudy_pro...', 'view')
+#2 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(511): think\Config->load('E:\\phpstudy_pro...', 'view')
+#3 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(420): think\App->load()
+#4 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(186): think\App->initialize()
+#5 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(163): think\Http->initialize()
+#6 E:\phpstudy_pro\WWW\tp6\public\index.php(26): think\Http->run()
+#7 {main}
+  thrown in E:\phpstudy_pro\WWW\tp6\config\view.php on line 30
+[28-Nov-2020 12:53:09 Asia/Shanghai] PHP Fatal error:  Uncaught Error: Class 'Config' not found in E:\phpstudy_pro\WWW\tp6\config\view.php:30
+Stack trace:
+#0 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(92): include()
+#1 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Config.php(73): think\Config->parse('E:\\phpstudy_pro...', 'view')
+#2 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(511): think\Config->load('E:\\phpstudy_pro...', 'view')
+#3 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\App.php(420): think\App->load()
+#4 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(186): think\App->initialize()
+#5 E:\phpstudy_pro\WWW\tp6\vendor\topthink\framework\src\think\Http.php(163): think\Http->initialize()
+#6 E:\phpstudy_pro\WWW\tp6\public\index.php(26): think\Http->run()
+#7 {main}
+  thrown in E:\phpstudy_pro\WWW\tp6\config\view.php on line 30

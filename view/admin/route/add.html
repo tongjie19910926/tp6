@@ -1,0 +1,350 @@
+{extend name="public/public"}
+
+{block name="content"}
+<div class="layui-container write">
+
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">权限类型</label>
+                        <div class="layui-input-block">
+                            <select name="type" lay-verify="required" lay-search lay-filter="type">
+                                <option value=""></option>
+                                <!--                            <option value="1">顶部一级菜单</option>-->
+                                <!--                            <option value="2">顶部二级菜单</option>-->
+                                <option value="3"{if isset($data) && $data.type == 3 } selected {/if}>左侧一级菜单</option>
+                                <option value="4"  {if isset($data) && $data.type == 4 } selected {/if} >左侧二级菜单</option>
+    <!--                            <option value="5">操作权限</option>-->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">父级菜单</label>
+                        <div class="layui-input-block">
+                            <select name="pid" lay-search lay-filter="pid">
+                                <option value=""></option>
+                                {if isset($pid) && isset($data)}
+                                    {volist name="pid" id="vo"}
+                                        <option value="{$vo.id}" {if  $data.pid == $vo.id} selected {/if}>{$vo.title}</option>
+                                    {/volist}
+                                {/if}
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" required value="{$data.title?:''}"  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">图标</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="icon" id="iconPicker" lay-filter="iconPicker" value="{$data.icon?:''}" style="display:none;">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">为一级菜单时有效</div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">权重</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="weigh" value="{$data.weigh?:0}" placeholder="请输入" lay-verify="number" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">越大越前面</div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">管理员查看</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="super" lay-skin="switch" lay-text="ON|OFF">
+                        </div>
+                    </div>
+
+                </div>
+
+                {if isset($data)}
+                <input type="hidden" name="id" value="{$data.id}">
+                {/if}
+
+                <fieldset class="layui-elem-field">
+                    <legend>二级菜单必填</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">渲染控制器</label>
+                                <div class="layui-input-inline">
+                                    <select name="controller"  lay-filter="controller"  lay-search="">
+                                        <option value=""></option>
+                                        {volist name="controller" id="vo"}
+                                            <option value="{$vo}"{if isset($data) && $data.route && parse_name($data.controller,1) == $vo} selected {/if}>{$vo}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">渲染方法</label>
+                                <div class="layui-input-inline">
+                                    <select name="method"   lay-search="">
+                                        {if isset($data) && isset($method)}
+                                            <option value=""></option>
+                                            {volist name="$method" id="vo"}
+                                                <option value="{$vo}"{if $data.method == $vo} selected {/if}>{$vo}</option>
+                                            {/volist}
+                                        {/if}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">权限控制器</label>
+                                <div class="layui-input-inline">
+                                    <select name="contr"  lay-filter="contr"  lay-search="">
+                                        <option value=""></option>
+                                        {volist name="controller" id="vo"}
+                                        <option value="{$vo}">{$vo}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">权限方法</label>
+                                <div class="layui-input-inline  xm-select-demo"   style="width: 300px;" id="demo1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">操作权限</label>
+                            <div class="layui-input-block">
+                                <textarea placeholder="" name="auth"  disabled  class="layui-textarea">{$data.auth?:''}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+</div>
+{/block}
+
+{block name="script"}
+<script>
+
+    layui.use(['form', 'jquery', 'sliderVerify', 'notice', 'iconPicker','xmSelect'], function(){
+        var form = layui.form,
+            sliderVerify = layui.sliderVerify,
+            $ = layui.jquery,
+            notice = layui.notice,
+            iconPicker = layui.iconPicker;
+        var xmSelect = layui.xmSelect;  //https://maplemei.gitee.io/xm-select/#/senior/update 文档地址
+
+        //渲染多选
+        var demo1 = xmSelect.render({
+            el: '#demo1',
+            data: [],
+            on:function (data) {
+                //arr:  当前多选已选中的数据
+                var arr = data.arr;
+                //change, 此次选择变化的数据,数组
+                var change = data.change;
+                console.log(change)
+                //isAdd, 此次操作是新增还是删除
+                var isAdd = data.isAdd;
+                console.log(isAdd)
+
+                let auth  = $("textarea[name='auth']").val() ? $("textarea[name='auth']").val().split(",") : [];
+                let value = $("select[name='contr']").val()+'/'+change[0].value;
+                if(isAdd){
+                    auth.push(value)
+                    return  $("textarea[name='auth']").val( auth.filter((v, i, arr) => arr.indexOf(v) === i))
+                }
+                let index = auth.indexOf(value);
+                auth.splice(index,1);
+                return  $("textarea[name='auth']").val( auth.filter((v, i, arr) => arr.indexOf(v) === i))
+            }
+        })
+
+
+
+
+
+
+        form.on('select(controller)', function(data){
+            if (!data.value){
+                $("select[name='method']").html(' <option value=""></option>');
+                 return    form.render('select');
+            }
+            let load = custom.loading();
+            $.ajax({
+                url: '{:url("methods")}?controller='+data.value
+                , type: 'get'
+                , success:function (res) {
+                    layer.close(load);
+                    if (res.code === 200) {
+                        let html = '';
+                        res.data.forEach(function (item,index,array) {
+                            if (item != '*'){
+                                html += '<option value="'+ item.value +'">'+ item.name +'</option>';
+                            }
+                        })
+                        $("select[name='method']").html(html);
+                        form.render('select');
+                    }else{
+                        notice.warning(res.msg);
+                    }
+                },
+                error:function (err) {
+                    layer.close(load);
+                    console.log(err);
+                }
+            });
+        });
+
+
+        form.on('select(contr)', function(data){
+
+            if (!data.value){
+               return  demo1.update({
+                    data: [],
+                    autoRow: true,
+                })
+            }
+            console.log(data)
+            let load = custom.loading();
+            $.ajax({
+                url: '{:url("methods")}?controller='+data.value+'&id={$Request.get.id?:0}'
+                , type: 'get'
+                , success:function (res) {
+                    layer.close(load);
+                    if (res.code === 200) {
+                        let obj = [];
+                        res.data.forEach(function (item,index,array) {
+                            obj.push({
+                                name:item.name,
+                                value:item.value,
+                                 selected:item.selected,
+                            })
+                        })
+                        demo1.update({
+                            data: obj,
+                            autoRow: true,
+                        })
+                    }else{
+                        notice.warning(res.msg);
+                    }
+                },
+                error:function (err) {
+                    layer.close(load);
+                    console.log(err);
+                }
+            });
+        });
+
+
+
+
+
+        iconPicker.render({
+            // 选择器，推荐使用input
+            elem: '#iconPicker',
+            // 数据类型：fontClass/unicode，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false，默认true
+            search: true,
+            // 是否开启分页：true/false，默认true
+            page: true,
+            // 每页显示数量，默认12
+            limit: 12,
+            // 每个图标格子的宽度：'43px'或'20%'
+            cellWidth: '43px',
+            // 点击回调
+            click: function (data) {
+
+            },
+            // 渲染成功后的回调
+            success: function(d) {
+                iconPicker.checkIcon('iconPicker', '{$data.icon ?: ""}');
+            }
+        });
+
+
+
+        let topFirst = [], leftFirst = [], all = [];
+        $.ajax({
+            url: '{:url("Route/firstMenu")}'
+            , success:function (res) {
+                if (res.code === 200) {
+                    topFirst = res.data.topFirst;
+                    leftFirst = res.data.leftFirst;
+                    all = res.data.all;
+                }
+            }
+        });
+
+        form.on('select(type)', function(data){
+            var menu = {},html = '<option value=""></option>';
+            if (data.value == 2) {
+                menu = topFirst;
+            }else if (data.value == 4) {
+                menu = leftFirst;
+            }else if (data.value == 5) {
+                menu = all;
+            }
+            for(let i in menu){
+                html += '<option value="'+ menu[i].id +'">'+ menu[i].title +'</option>';
+            }
+            $('select[name=pid]').html(html);
+            form.render('select')
+
+        });
+
+
+        form.on('submit(formDemo)', function (data) {
+            data.field.super = data.field.super== undefined ? 0 :1;
+            let load = custom.loading();
+            $.ajax({
+                url: '{present name="data"}'+ '{:url("editHandle")}' + '{else /}' + '{:url("addHandle")}' + '{/present}'
+                , type: 'post'
+                , data: data.field
+                , success:function (res) {
+                    layer.close(load);
+                    if (res.code === 200) {
+
+                         parent.layer.closeAll();
+                        window.parent.layNotice.success('成功');
+                        window.parent.tables();
+                    }else{
+                        notice.warning(res.msg);
+                    }
+                },
+                error:function (err) {
+                    layer.close(load);
+                    console.log(err);
+                }
+            });
+
+            return false;
+        })
+    });
+
+</script>
+{/block}

@@ -1,0 +1,217 @@
+{extend name="public/public"}
+
+{block name="content"}
+<div class="layui-container write">
+
+    <style>
+        .layui-upload-img { width: 90px; height: 90px; margin: 0; }
+        .pic-more { width:100%; left; margin: 10px 0px 0px 0px;}
+        .pic-more li { width:90px; float: left; margin-right: 5px;}
+        .pic-more li .layui-input { display: initial; }
+        .pic-more li a { position: absolute; top: 0; display: block; }
+        .pic-more li a i { font-size: 24px; background-color: #008800; }
+        #slide-pc-priview .item_img img{ width: 90px; height: 90px;}
+        #slide-pc-priview li{position: relative;}
+        #slide-pc-priview li .operate{ color: #000; display: none;}
+        #slide-pc-priview li .toleft{ position: absolute;top: 40px; left: 1px; cursor:pointer;}
+        #slide-pc-priview li .toright{ position: absolute;top: 40px; right: 1px;cursor:pointer;}
+        #slide-pc-priview li .close{position: absolute;top: 5px; right: 5px;cursor:pointer;}
+        #slide-pc-priview li:hover .operate{ display: block;}
+    </style>
+
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" required value="{$data.name?:''}"  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">登录账号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="number" required value="{$data.number?:''}"  lay-verify="required" placeholder="请输入登录账号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+
+            {present name="data"}
+                <input type="hidden" name="id" value="{$data.id}">
+            {else /}
+                <div class="layui-inline">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="password" required value="{$data.password?:'123456'}"  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            {/present}
+
+            <div class="layui-inline">
+                <label class="layui-form-label">电话</label>
+                <div class="layui-input-block">
+                    <input type="tel" name="phone"  value="{$data.phone?:''}"  lay-verify="required|phone"  placeholder="请输入电话" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email"  value="{$data.email?:''}"  lay-verify="email"  placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">身份证号码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="card"  value="{$data.card?:''}"  lay-verify="required" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-block">
+                {volist name="role" id="vo"}
+                    <input type="checkbox" name="role[{$vo.id}][role_id]" lay-skin="primary"  value="{$vo.id}"  {if isset($data.AdminRole) && in_array($vo.id,$data.AdminRole) } checked {/if} title="{$vo.role}">
+                {/volist}
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">图片</label>
+                <input type="hidden" name="image"  id="image" value="{$data.image ?:''}">
+                <div class="layui-upload-drag" id="test10">
+                    <i class="layui-icon"></i>
+                    <p>点击上传，或将图片拖拽到此处</p>
+                    <div  {if empty($data.image)}class="layui-hide"{/if} id="img">
+                        <hr>
+                        <img src="{if  isset($data.image) && $data.image}__UPLOAD__{$data.image}{/if}" alt="上传成功后渲染" style="max-width: 196px">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>
+{/block}
+
+{block name="script"}
+<script>
+
+    layui.use(['form', 'jquery', 'sliderVerify', 'notice', 'iconPicker','xmSelect'], function(){
+        var form = layui.form,
+            $ = layui.jquery,
+            notice = layui.notice,
+            upload = layui.upload;
+
+
+
+        //拖拽上传
+        upload.render({
+            elem: '#test10'
+            ,url: '{:url("upload")}' //改成您自己的上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1, {
+                    time: 30*1000,
+                })
+            }
+            ,done: function(res){
+                $('#image').val(res.data.src); //图片链接（base64）
+                layui.$('#img').removeClass('layui-hide').find('img').attr('src', '__UPLOAD__'+ res.data.src);
+                layer.closeAll('loading'); //关闭loading
+            }
+            ,error: function(index, upload){
+                layer.closeAll('loading'); //关闭loading
+                notice.warning('上传失败');
+            }
+        });
+
+
+
+
+        form.on('submit(formDemo)', function (data) {
+            let load = custom.loading();
+            $.ajax({
+                url: '{present name="data"}'+ '{:url("editHandle")}' + '{else /}' + '{:url("addHandle")}' + '{/present}'
+                , type: 'post'
+                , data: data.field
+                , success:function (res) {
+                    layer.close(load);
+                    if (res.code === 200) {
+                        parent.layer.closeAll();
+                        window.parent.layNotice.success('成功');
+                        window.parent.tables();
+                    }else{
+                        notice.warning(res.msg);
+                    }
+                },
+                error:function (err) {
+                    layer.close(load);
+                    console.log(err);
+                }
+            });
+            return false;
+        })
+    });
+
+
+    //点击多图上传的X,删除当前的图片
+    $("body").on("click",".close",function(){
+        $(this).closest("li").remove();
+    });
+    //多图上传点击<>左右移动图片
+    $("body").on("click",".pic-more ul li .toleft",function(){
+        var li_index=$(this).closest("li").index();
+        if(li_index>=1){
+            $(this).closest("li").insertBefore($(this).closest("ul").find("li").eq(Number(li_index)-1));
+        }
+    });
+    $("body").on("click",".pic-more ul li .toright",function(){
+        var li_index=$(this).closest("li").index();
+        $(this).closest("li").insertAfter($(this).closest("ul").find("li").eq(Number(li_index)+1));
+    });
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+{/block}

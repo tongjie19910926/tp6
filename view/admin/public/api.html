@@ -1,0 +1,146 @@
+
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">虚拟会员数(人)</label>
+            <div class="layui-input-inline">
+                <input type="number" min="0"    value="{$data.[api].virtual_member ?:0}"  name="virtual_member" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+
+        <div class="layui-inline">
+            <label class="layui-form-label">会员额度(人)</label>
+            <div class="layui-input-inline">
+                <input type="number" min="0"  value="{$data.[api].member_money ?:0}"   name="member_money" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px" >提现金额审核(元)</label>
+            <div class="layui-input-inline">
+                <input type="number" min="0"   value="{$data.[api].withdraw ?:0}"    name="withdraw" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">团长额度(人)</label>
+            <div class="layui-input-inline">
+                <input type="number" min="0"  value="{$data.[api].head ?:0}"    name="head" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-inline">
+            <label class="layui-form-label">X天自动收货(天)</label>
+            <div class="layui-input-inline">
+                <input type="number" min="0" name="reward" value="{$data.[api].reward ?:3}"     lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">积分比例（%）</label>
+            <div class="layui-input-inline">
+                <input type="number" min="0" name="scale"  value="{$data.[api].scale ?:3}"  lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
+
+    <fieldset class="layui-elem-field">
+        <legend>新人奖励</legend>
+        <div class="layui-field-box">
+
+
+
+
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" >新人红包(元)</label>
+                    <div class="layui-input-inline">
+                        <input type="number" min="0"  value="{$data.[api].envelope ?:0}"    name="envelope" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+
+
+
+                <div class="layui-inline">
+                    <label class="layui-form-label"   style="width: 180px">商品代金券金额（元）</label>
+                    <div class="layui-input-inline">
+                        <input type="number" min="0"  value="{$data.[api].award_coupon_amount ?:0}"    name="award_coupon_amount" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" >新人积分</label>
+                    <div class="layui-input-inline">
+                        <input type="number" min="0"  value="{$data.[api].award_integral ?:0}"    name="award_integral" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </fieldset>
+
+
+
+    <fieldset class="layui-elem-field">
+        <legend>当团长下线成为会员时奖励</legend>
+        <div class="layui-field-box">
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" >余额（元）</label>
+                    <div class="layui-input-inline">
+                        <input type="number" min="0"  value="{$data.[api].reward_balance ?:0}"    name="reward_balance" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label"   style="width: 180px">积分</label>
+                    <div class="layui-input-inline">
+                        <input type="number" min="0"  value="{$data.[api].reward_integral ?:0}"    name="reward_integral" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+
+
+    <fieldset class="layui-elem-field">
+        <legend>当团长下线抢到广告费 团长奖励（%）</legend>
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" >比例</label>
+                    <div class="layui-input-inline">
+                        <input type="number" min="0"  value="{$data.[api].proportion ?:0}"    name="proportion"  lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+
+
+    <div class="layui-form-item" style="margin-bottom: 100px">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="[api]">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>

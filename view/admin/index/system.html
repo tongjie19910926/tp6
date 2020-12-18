@@ -1,0 +1,169 @@
+{extend name="public/public"}
+{block name="content"}
+<div class="layui-tab layui-tab-card" >
+    <ul class="layui-tab-title">
+        {volist name="list" id="vo"}
+        <li {if $i == 1} class="layui-this"{/if}>{$vo}</li>
+        {/volist}
+    </ul>
+    <div class="layui-tab-content write" >
+        <div class="layui-tab-item layui-show">
+            {include file="public/system" form="system" /}
+        </div>
+
+<!--        <div class="layui-tab-item">-->
+<!--            {include file="public/api" api="api" /}-->
+<!--        </div>-->
+
+        <div class="layui-tab-item">
+            {include file="public/graphic" api="graphic" /}
+        </div>
+
+
+
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+
+
+
+    let ue_platform = UE.getEditor("platform_introduction", custom.setUEditorConfig({
+        zIndex: 100
+    }));
+    let ue_member = UE.getEditor("member_introduction", custom.setUEditorConfig({
+        zIndex: 100
+    }));
+
+    let ue_recharge_pact = UE.getEditor("recharge_pact", custom.setUEditorConfig({
+        zIndex: 100
+    }));
+
+
+    let ue_purchase_agreement = UE.getEditor("purchase_agreement", custom.setUEditorConfig({
+        zIndex: 100
+    }));
+
+
+
+    let ue_leader_introduction = UE.getEditor("leader_introduction", custom.setUEditorConfig({
+        zIndex: 100
+    }));
+
+
+    layui.use(['form', 'jquery', 'sliderVerify', 'notice','upload'], function() {
+        var form = layui.form,
+            $ = layui.jquery,
+            notice = layui.notice,
+            upload = layui.upload;
+
+
+        //========================================网站设置===========================================
+        //拖拽上传
+        upload.render({
+            elem: '#systemtest10'
+            ,url: '{:url("upload")}' //改成您自己的上传接口
+            ,exts:'ico'
+            ,done: function(res){
+                $('#systemimage').val(res.data.src); //图片链接（base64）
+                layui.$('#systemimg').removeClass('layui-hide').find('img').attr('src', '__UPLOAD__'+ res.data.src);
+            }
+        });
+        //拖拽上传
+        upload.render({
+            elem: '#systemtest11'
+            ,url: '{:url("upload")}' //改成您自己的上传接口
+            ,done: function(res){
+                $('#systemmarket_image').val(res.data.src); //图片链接（base64）
+                layui.$('#systemmar_img').removeClass('layui-hide').find('img').attr('src', '__UPLOAD__'+ res.data.src);
+            }
+        });
+        form.on('submit(system)', function (data) {
+            let load = custom.loading();
+            data.field.type = 'system';
+            delete  data.field.file;
+            $.ajax({
+                url: '{:url("config/systemEdit")}'
+                , type: 'post'
+                ,headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                , data: data.field
+                , success:function (res) {
+                    layer.close(load);
+                    if (res.code === 200) {
+                        layNotice.success('成功');
+
+                    }else{
+                        notice.warning(res.msg);
+                    }
+                },
+                error:function (err) {
+                    layer.close(load);
+                }
+            });
+            return false;
+        })
+        //========================================系统设置===========================================
+
+
+        form.on('submit(api)', function (data) {
+            data.field.type = 'api';
+            let load = custom.loading();
+            $.ajax({
+                url: '{:url("systemEdit")}'
+                , type: 'post'
+                ,headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                , data: data.field
+                , success:function (res) {
+                    layer.close(load);
+                    if (res.code === 200) {
+                        layNotice.success('成功');
+                    }else{
+                        notice.warning(res.msg);
+                    }
+                },
+                error:function (err) {
+                    layer.close(load);
+                }
+            });
+            return false;
+        })
+        //========================================富文本===========================================
+
+        form.on('submit(graphic)', function (data) {
+            data.field.type = 'graphic';
+            let load = custom.loading();
+            $.ajax({
+                url: '{:url("systemEdit")}'
+                , type: 'post'
+                ,headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                , data: data.field
+                , success:function (res) {
+                    layer.close(load);
+                    if (res.code === 200) {
+                        layNotice.success('成功');
+                    }else{
+                        notice.warning(res.msg);
+                    }
+                },
+                error:function (err) {
+                    layer.close(load);
+                }
+            });
+            return false;
+        })
+
+
+    })
+
+
+</script>
+
+{/block}

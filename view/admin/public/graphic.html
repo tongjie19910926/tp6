@@ -1,0 +1,57 @@
+<form class="layui-form" action="">
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">平台介绍</label>
+        <div class="layui-input-block">
+            <script id="platform_introduction" name="platform_introduction" type="text/plain">{:html_entity_decode($data.[api].platform_introduction ?? '')}</script>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">会员介绍</label>
+        <div class="layui-input-block">
+            <script id="member_introduction" name="member_introduction" type="text/plain">{:html_entity_decode($data.[api].member_introduction ?? '')}</script>
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">充值协议</label>
+        <div class="layui-input-block">
+            <script id="recharge_pact" name="recharge_pact" type="text/plain">{:html_entity_decode($data.[api].recharge_pact ?? '')}</script>
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">购买协议111</label>
+        <div class="layui-input-block">
+            <script id="purchase_agreement" name="purchase_agreement" type="text/plain">{:html_entity_decode($data.[api].purchase_agreement ?? '')}</script>
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">团长介绍</label>
+        <div class="layui-input-block">
+            <script id="leader_introduction" name="leader_introduction" type="text/plain">{:html_entity_decode($data.[api].leader_introduction ?? '')}</script>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="layui-form-item" style="margin-bottom: 100px">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="[api]">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {block name="title"}
+        layui
+        {/block}
+    </title>
+    <!--    头部-->
+    {block name="meta"}
+        {:token_meta()}
+    {/block}
+
+    {block name="css"}
+    <link rel="stylesheet" href="__PUBLIC__/admin_static/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/admin_static/css/admin.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/admin_static/css/customize.css" media="all">
+    {/block}
+
+    {block name="js"}
+        <script type="text/javascript" src="__PUBLIC__/admin_static/js/jquery-3.1.1.min.js"></script>
+        <script>
+            const DEBUG = "{:env('APP_DEBUG')}";
+        </script>
+    {/block}
+
+    {block name="setup"}
+            <script>
+                $.ajaxSetup({
+                    complete: function (XMLHttpRequest, textStatus) {
+                          if (XMLHttpRequest.status == 200  && XMLHttpRequest.responseJSON.code == 405){
+                              top.location.href = '{:url("/")}';
+                          }
+                    }
+                });
+            </script>
+    {/block}
+    {block name="head"}{/block}
+</head>
+<body {block name="body"}{/block} >
+{block name="content"}
+
+{/block}
+{block name="bot_js"}
+<script type="text/javascript" src="__PUBLIC__/admin_static/layui/layui.all.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin_static/js/custom.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin_static/editor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__PUBLIC__/admin_static/editor/ueditor.all.js"></script>
+<script>
+    layui.config({
+        base: '__PUBLIC__/admin_static/layui/dist/'
+    }).use(['notice'],function () {
+        window.layNotice = layui.notice;
+    });
+</script>
+{/block}
+{block name="script"}
+{/block}
+</body>
+</html>
+
+
+
+
+

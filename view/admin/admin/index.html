@@ -1,0 +1,107 @@
+{extend name="public/public"}
+{block name="content"}
+<!-- 表格 -->
+<div class="layui-card">
+    <div class="layui-card-body">
+        {:html_entity_decode($search ?? '')}
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+
+<!-- 表格头部工具栏 -->
+<script type="text/html" id="tableHead">
+    <button type="button" lay-event="add" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i>添加用户</button>
+</script>
+
+<!-- 行操作 -->
+<script type="text/html" id="handle">
+    <button type="button" lay-event="del" class="layui-btn layui-btn-xs layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>删除</button>
+    <button type="button" lay-event="edit" class="layui-btn  layui-btn-xs"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+</script>
+
+
+<script>
+    let tableUrl = "{:url('indexData')}";
+    layui.use(['table', 'jquery', 'form', 'notice'], function() {
+        var $ = layui.jquery, form = layui.form,table = layui.table,notice = layui.notice;//很重要
+
+
+        custom.tab_ren(table,tableUrl,{
+            cols: [[
+                {field:'id', width:80, title: 'ID'}
+                ,{field:'name',align:'center', title: '昵称'}
+                ,{field:'number',align:'center', title: '账号'}
+                ,{field:'image', title: '头像',templet:function (obj) {
+                        return  obj.image ? '<div class="layer-photos-demo">\n' +
+                            '  <img layer-pid="" layer-src="__UPLOAD__'+obj.image+'" src="__UPLOAD__'+obj.image+'" alt="'+obj.name+'">\n' +
+                            '</div>' : '——';
+                    }}
+                ,{field:'phone',align:'center', title: '电话'}
+                ,{field:'email',align:'center', title: '邮箱'}
+                ,{field:'card',align:'center', title: '身份证'}
+                ,{field:'lately',align:'center', title: '最近登录时间'}
+                ,{title: '操作',align:'center',templet:'#handle', fixed: 'right'}
+            ]],
+        });
+
+        custom.tab_bar(table,{
+            add:function (obj) {
+                custom.frame('{:url("add")}', '添加用户');
+            }
+        })
+
+        custom.tab_tool(table,{
+            edit:function (obj) {
+                custom.frame('{:url("add")}?id='+obj.data.id, '修改用户');
+            },
+            del:function (obj) {
+                layer.confirm('确认删除该数据吗？', {icon:3,title:'警告'}, function (index) {
+                    let load = custom.loading();
+                    $.ajax({
+                        url: '{:url("del")}'
+                        , type: 'post'
+                        , data: {id:obj.data.id}
+                        , success:function (res) {
+                            layer.close(load);
+                            if (res.code === 200) {
+                                layNotice.success('删除成功');
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                            }else{
+                                layNotice.error(res.msg);
+                            }
+                        }
+                        , error:function (err) {
+                            console.log(err);
+                        }
+                    });
+                })
+            }
+        })
+
+        form.on('submit(search)',function (obj) {
+            table.reload('test', {
+                where:{
+                    search:obj.field
+                },
+                page:{
+                    curr:1
+                }
+            })
+        });
+
+
+
+    });
+
+
+
+
+
+</script>
+
+
+
+{/block}

@@ -1,0 +1,163 @@
+{extend name="public/public"}
+{block name="content"}
+<!-- 表格 -->
+<div class="layui-card">
+    <div class="layui-card-body">
+        {:html_entity_decode($search ?? '')}
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+
+<!-- 表格头部工具栏 -->
+<script type="text/html" id="tableHead">
+    <button type="button" lay-event="add" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i>添加角色</button>
+</script>
+
+<!-- 行操作 -->
+<script type="text/html" id="handle">
+
+    <button type="button" lay-event="del" class="layui-btn layui-btn-xs layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>删除</button>
+    <button type="button" lay-event="edit" class="layui-btn  layui-btn-xs"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+    <button type="button" lay-event="set" class="layui-btn   layui-bg-blue  layui-btn-xs"><i class="layui-icon layui-icon-set"></i>权限设置</button>
+
+</script>
+
+
+<script>
+    let tableUrl = "{:url('indexData')}";
+    layui.use(['table', 'jquery', 'form', 'notice'], function() {
+        var $ = layui.jquery, form = layui.form,table = layui.table,notice = layui.notice;//很重要
+        table.render({
+            elem: '#test'
+            ,url: tableUrl
+            , toolbar: '#tableHead'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,page:true
+            ,height: 'full-135'
+            ,limit:15
+            ,cols: [[
+                {field:'id', width:80, title: 'ID'}
+                ,{field:'role',align:'center', title: '角色名称'}
+                ,{field:'p_role',align:'center', title: '添加者'}
+                ,{field:'status_text',align:'center', title: '状态'}
+                ,{title: '操作',align:'center',templet:'#handle', fixed: 'right'}
+            ]],
+            done:function (res) {
+                custom.enlarge(layer, $, '.layer-photos-demo');
+                window.table = table;
+            }
+        });
+
+        //    头部工具栏事件监听
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'add':
+                    layer.prompt({
+                        title: '请输入角色名',
+                        shade:false
+                    }, function(value, index, elem){
+                        $.ajax({
+                            url: '{:url("addHandle")}'
+                            , type: 'post'
+                            , data: {role:value}
+                            , success:function (res) {
+                                layer.close(index);
+                                if (res.code === 200) {
+                                    layNotice.success('添加成功');
+                                    table.reload('test');
+                                }else{
+                                    layNotice.error(res.msg);
+                                }
+                            }
+                            , error:function (err) {
+                                console.log(err);
+                            }
+                        });
+                    });
+                    break;
+            }
+        });
+
+
+        table.on('tool(test)', function (obj) {
+            if (obj.event === 'edit') {  //切换状态
+                layer.prompt({
+                    title: '请输入角色名',
+                    value:obj.data.role,
+                    shade:false
+                }, function(value, index, elem){
+                    $.ajax({
+                        url: '{:url("editHandle")}'
+                        , type: 'post'
+                        , data: {role:value,id:obj.data.id}
+                        , success:function (res) {
+                            layer.close(index);
+                            if (res.code === 200) {
+                                layNotice.success('修改成功');
+                                //同步更新缓存对应的值
+                                obj.update({
+                                    role: value
+                                });
+                            }else{
+                                layNotice.error(res.msg);
+                            }
+                        }
+                        , error:function (err) {
+                            console.log(err);
+                        }
+                    });
+                });
+            }else if(obj.event === 'del'){
+                layer.confirm('确认删除该数据吗？', {icon:3,title:'警告'}, function (index) {
+                    let load = custom.loading();
+                    $.ajax({
+                        url: '{:url("del")}'
+                        , type: 'post'
+                        , data: {id:obj.data.id}
+                        , success:function (res) {
+                            layer.close(load);
+                            if (res.code === 200) {
+                                layNotice.success('删除成功');
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                            }else{
+                                layNotice.error(res.msg);
+                            }
+                        }
+                        , error:function (err) {
+                            console.log(err);
+                        }
+                    });
+                })
+
+            }else if(obj.event === 'set'){
+                custom.frame('{:url("set")}?role_id='+obj.data.id, '权限设置',{area:['30%','80%']});
+            }
+        });
+
+
+
+        form.on('submit(search)',function (obj) {
+            table.reload('test', {
+                where:{
+                    search:obj.field
+                },
+                page:{
+                    curr:1
+                }
+            })
+        });
+    });
+
+
+
+
+
+</script>
+
+
+
+{/block}
